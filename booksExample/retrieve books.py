@@ -20,7 +20,7 @@ user_category = input("What kind of books would you like? ")
 query = "SELECT title FROM book WHERE category LIKE %s"
 
 # Execute query
-cursor.execute(query, ("%" + user_category + "%",))
+cursor.execute(query, ["%" + user_category + "%"])
 
 # Retrieve all the books into a list of tuples
 books = cursor.fetchall()
