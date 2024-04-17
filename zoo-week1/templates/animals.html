@@ -7,6 +7,14 @@
         <th>Color</th>
         <th>Picture</th>
     </tr>
-<!--Insert for loop to iterate through list of tuples to populate table with animals-->
+    {% for animal in animals %}
+        <tr>
+           {% for field in animal %}
+                <td>{{ field }}</td>
+            {% endfor %}
+            <td><img height = 100 width = 100 src = "static/images/{{animal[0]}}.png" alt = '{{animal[0]}}'></td>
+        </tr>
+    {% endfor %}
+
 </table>
 {% endblock %}

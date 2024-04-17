@@ -33,12 +33,15 @@ def schedule():
 
 @app.route('/animals')
 def animals():
-    # todo: Execute query to get the animals from the database
+    # Execute query to get the animals from the database
+    cursor = mydb.cursor()
+    query = "select animalType, animalSize, animalColor from animal"
+    cursor.execute(query)
 
-    # todo: Fetch all the rows in a list of tuples called animals.
-
-    # todo: Link to the animals page.  Pass the animals as a parameter
-    return render_template()
+    # Fetch all the rows in a list of tuples called animals.
+    animals = cursor.fetchall()
+    # Link to the animals page.  Pass the animals as a parameter
+    return render_template('animals.html', animals = animals)
 
 if __name__ == "__main__":
     app.run(debug = True)
