@@ -1,7 +1,11 @@
 
 import pymongo
 
-# todo  Connect to MongoDB
+# Connect to MongoDB
+client = pymongo.MongoClient()
+db = client.students
+students = db.students
+
 
 
 while True:
@@ -15,16 +19,29 @@ while True:
         gender = input("Enter gender: ")
         height = input("Enter height: ")
         weight = input("Enter weight: ")
-        # todo Create document and store in Database
+        # Create document and store in Database
+        doc = {
+            "Name":student,
+            "Age": age,
+            "Gender": gender,
+            "Height": height,
+            "Weight": weight
+        }
+        students.insert_one(doc)
 
         print ("Document inserted")
 
     # Display a document
     elif option == "r":
         student = input("Enter student to find: ")
-        # todo Tell user if no documents
-
-        # todo Loop through documents and print them
+        # Tell user if no documents
+        if students.count_documents({"Name": student}) == 0:
+            print ("None found")
+        else:
+            #Loop through documents and print them
+            for doc in students.find({"Name": student}):
+                for key,value in doc.items():
+                    print (key, value)
 
     # Update a document
     elif option == "u":
@@ -35,7 +52,19 @@ while True:
         height = input ("Enter height: ")
         weight = input ("Enter weight: ")
 
-        # todo Create updated document and perform update
+        # Create updated document and perform update
+        updated_doc ={
+            "Name": student,
+            "Age": age,
+            "Gender": gender,
+            "Height": height,
+            "Weight": weight
+        }
+        students.update_one(
+            {"Name": student},
+            {"$set": updated_doc}
+        )
+
 
         print ("Document updated")
 
@@ -43,7 +72,10 @@ while True:
     elif option =="d":
         student = input("Enter student to delete: ")
 
-        # todo Delete document
+        # Delete document
+        students.delete_one({
+            "Name": student
+        })
 
         print ("Document deleted")
 
